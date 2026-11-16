@@ -4,14 +4,19 @@ Repositori ini memuat hasil riset komprehensif dari **30 sumber ilmiah, industri
 
 ---
 
-## 📁 Berkas Utama
+## 📁 Berkas Utama dalam Repositori
 1. **[Riset_Ide_Bisnis_Deduplikasi_Cloud_Storage.xlsx](Riset_Ide_Bisnis_Deduplikasi_Cloud_Storage.xlsx)**  
    Buku kerja Excel profesional multi-sheet yang berisi:
-   * **Sheet 1: Ringkasan Ide Bisnis** (Pernyataan masalah, value proposition, target pasar, model monetisasi, dan analisis SWOT).
-   * **Sheet 2: 30 Sumber Riset** (Database terstruktur 30 referensi akademik USENIX/IEEE, laporan industri Gartner/IDC/Flexera, whitepaper Dropbox/Google/Microsoft/Apple, dan FinOps).
-   * **Sheet 3: Validasi Pasar & Statistik** (Analisis persentase file duplikat, kalkulator penghematan biaya langganan hingga 80%).
-   * **Sheet 4: Roadmap Produk & MVP** (Fase 1 PoC hingga Fase 5 Enterprise Compliance).
-2. **`generate_excel.js`**  
+   * **Sheet 1: Kesimpulan Riset** (Matriks sintesis 6 dimensi masalah-solusi dari 30 sumber riset & tabel metrik kuantitatif).
+   * **Sheet 2: Ringkasan Ide Bisnis** (Pernyataan masalah, value proposition, target pasar, model monetisasi, dan analisis SWOT).
+   * **Sheet 3: 30 Sumber Riset** (Database terstruktur 30 referensi akademik USENIX/IEEE, laporan industri Gartner/IDC/Flexera, whitepaper Dropbox/Google/Microsoft/Apple, dan FinOps).
+   * **Sheet 4: Validasi Pasar & Statistik** (Analisis persentase file duplikat, kalkulator penghematan biaya langganan hingga 80%).
+   * **Sheet 5: Roadmap Produk & MVP** (Fase 1 PoC hingga Fase 5 Enterprise Compliance).
+2. **[LANGKAH_LANGKAH_DAN_HASIL.md](LANGKAH_LANGKAH_DAN_HASIL.md)**  
+   Dokumentasi mendalam mengenai ringkasan hasil riset serta panduan teknis langkah-langkah push ke repositori GitHub.
+3. **[auto_push.bat](auto_push.bat)**  
+   Skrip otomasi sekali klik (batch script) untuk melakukan sinkronisasi, komit, dan push otomatis ke GitHub branch `main`.
+4. **`generate_excel.js`**  
    Skrip otomatisasi berbasis Node.js & ExcelJS untuk meregenerasi file Excel dengan styling dan format data terstruktur.
 
 ---
@@ -69,15 +74,15 @@ Riset ini didasari oleh telaah mendalam dari 30 literatur terkemuka:
 | 25 | Economic Value of Pre-Upload | ESG Research (2021) | Riset Ekonomi TI | ROI positif dalam < 6 bulan untuk software penyaring redundansi data. |
 | 26 | Secure Convergent Key Sharing| Li, Chen, et al. (2014) | IEEE TPDS | Arsitektur zero-knowledge tanpa server mengetahui konten file pengguna. |
 | 27 | Video Production Footprint | SMPTE Journal (2022) | Industri Kreatif | Redundansi puluhan GB akibat penamaan file render berulang (v1, v2). |
-| 28 | Primary Data Deduplication | Microsoft Research (2019) | Riset Komputasi | Redundansi dokumen kantor mencapai 75% antar anggota tim kerja. |
+| 28 | Primary Data Deduplication | Microsoft Research (2019) | Riset Komputasi | Redundansi dokumen kantor mencapai 75% antar anggota tim. |
 | 29 | Consumer Storage Habits | Pew Research (2023) | Survei Konsumen | 67% pengguna smartphone mengalami "subscription fatigue" biaya cloud. |
 | 30 | Near-Duplicate Video Retrieval | Tan, Ngo, et al. (2021) | ACM TOMM | Pengenalan keyframe video mereduksi duplikasi video cloud hingga 52%. |
 
 ---
 
-## 🚀 Langkah-Langkah Pembuatan & Reproduksi
-1. **Analisis Kebutuhan Riset:** Menghimpun 30 literatur lintas disiplin ilmu (akademik, industri storage, penyedia cloud, dan ekonomi FinOps).
-2. **Perancangan Skema Database Excel:** Mengelompokkan analisis ke dalam 4 sheet utama (Ringkasan Bisnis, 30 Sumber, Validasi Pasar, dan Roadmap Produk).
-3. **Automasi Pembuatan Excel:** Menjalankan `generate_excel.js` menggunakan engine `ExcelJS` untuk memastikan tata letak profesional, palet warna Navy-Green, auto-wrap text, dan border rapi.
-4. **Validasi File:** Memastikan struktur data valid dan siap dipresentasikan.
-5. **Git Push ke GitHub:** Sinkronisasi file dan dokumentasi langsung ke branch `main` repositori `lusiaauliad/latihan`.
+## 🚀 Panduan Otomasi Push Sekali Klik
+Untuk melakukan sinkronisasi otomatis di masa mendatang:
+* Cukup jalankan berkas **`auto_push.bat`** di direktori ini atau jalankan:
+  ```powershell
+  .\auto_push.bat
+  ```
