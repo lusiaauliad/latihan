@@ -12,22 +12,170 @@ async function createResearchWorkbook() {
   const fillHeader = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF1F4E79' } }; // Dark Navy
   const fillSubHeader = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF2F6B9A' } };
   const fillZebra = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFF9FAFC' } };
+  const fillAccent = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FFEBF1F5' } };
   const thinBorder = {
     top: { style: 'thin', color: { argb: 'FFD3D3D3' } },
     left: { style: 'thin', color: { argb: 'FFD3D3D3' } },
     bottom: { style: 'thin', color: { argb: 'FFD3D3D3' } },
     right: { style: 'thin', color: { argb: 'FFD3D3D3' } }
   };
-  const fontTitle = { name: 'Segoe UI', size: 16, bold: true, color: { argb: 'FF1F4E79' } };
-  const fontSubtitle = { name: 'Segoe UI', size: 11, italic: true, color: { argb: 'FF595959' } };
-  const fontSection = { name: 'Segoe UI', size: 12, bold: true, color: { argb: 'FF1F4E79' } };
+  const fontTitle = { name: 'Segoe UI', size: 15, bold: true, color: { argb: 'FF1F4E79' } };
+  const fontSubtitle = { name: 'Segoe UI', size: 10, italic: true, color: { argb: 'FF595959' } };
+  const fontSection = { name: 'Segoe UI', size: 11, bold: true, color: { argb: 'FF1F4E79' } };
 
   // ==========================================
-  // SHEET 1: RINGKASAN EKSEKUTIF & IDE BISNIS
+  // SHEET 1: KESIMPULAN RISET (EXECUTIVE SUMMARY)
+  // ==========================================
+  const wsKesimpulan = workbook.addWorksheet('Kesimpulan Riset', {
+    views: [{ showGridLines: true }],
+    properties: { tabColor: { argb: 'FF1F4E79' } }
+  });
+
+  wsKesimpulan.columns = [
+    { width: 5 },   // A (Spasi margin)
+    { width: 6 },   // B (No)
+    { width: 24 },  // C (Dimensi Riset)
+    { width: 38 },  // D (Masalah yang Ditemukan)
+    { width: 42 },  // E (Bukti Data dari 30 Sumber)
+    { width: 44 },  // F (Kesimpulan Ide Bisnis / Solusi)
+    { width: 40 }   // G (Rekomendasi Strategis)
+  ];
+
+  // Header Title
+  wsKesimpulan.mergeCells('B2:G2');
+  wsKesimpulan.getCell('B2').value = 'MATRIKS KESIMPULAN RISET: PERMASALAHAN FILE DUPLIKAT CLOUD MENJADI IDE BISNIS';
+  wsKesimpulan.getCell('B2').font = fontTitle;
+
+  wsKesimpulan.mergeCells('B3:G3');
+  wsKesimpulan.getCell('B3').value = 'Sintesis Eksekutif dari 30 Sumber Akademik, Laporan Industri, & Analisis FinOps (Produk: Smart DedupliCloud)';
+  wsKesimpulan.getCell('B3').font = fontSubtitle;
+
+  // Table 1: Matriks Kesimpulan Berdasarkan 6 Dimensi
+  const headerKesimpulan = ['No', 'Dimensi Riset', 'Permasalahan Utama Teridentifikasi', 'Bukti Data & Temuan 30 Sumber', 'Kesimpulan Ide Bisnis (Solusi)', 'Rekomendasi Strategis Eksekusi'];
+  const rowH1 = wsKesimpulan.getRow(5);
+  rowH1.values = ['', ...headerKesimpulan];
+  rowH1.height = 28;
+  for (let c = 2; c <= 7; c++) {
+    const cell = rowH1.getCell(c);
+    cell.font = fontHeader;
+    cell.fill = fillHeader;
+    cell.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true };
+  }
+
+  const kesimpulanMatrix = [
+    {
+      no: 1,
+      dimensi: '1. Pemborosan Ruang Cloud (Storage Waste)',
+      masalah: 'Konsumen dan bisnis secara tidak sadar mengunggah file yang sama persis berkali-kali ke cloud storage.',
+      temuan: 'IDC (2022) & Flexera (2023) mencatat 42% data di cloud adalah data redundan/usang (ROT). 32% tagihan cloud terbuang percuma.',
+      solusi: 'Aplikasi "DedupliCloud" otomatis mendeteksi dan mengonsolidasikan file identik menggunakan algoritma hashing (SHA-256).',
+      rekomendasi: 'Fokuskan value proposition utama pada "Bebaskan 40% kapasitas cloud tanpa harus menghapus file kerja penting".'
+    },
+    {
+      no: 2,
+      dimensi: '2. Inefisiensi Bandwidth & Waktu Upload',
+      masalah: 'Upload ulang file besar (video, master render, installer) memperlambat koneksi internet dan boros kuota.',
+      temuan: 'Xia et al. (2016) & Chen et al. (2021) membuktikan in-line client deduplication menghemat bandwidth hingga 70% dan waktu 65%.',
+      solusi: 'Pre-Upload Interceptor: Desktop agent & browser extension menyaring file lokal SEBELUM paket data ditransfer ke cloud.',
+      rekomendasi: 'Rilis Desktop Agent (Windows/Mac) dan Chrome Extension yang langsung memblokir proses upload jika file sudah ada di cloud.'
+    },
+    {
+      no: 3,
+      dimensi: '3. Biaya Langganan & Subscription Fatigue',
+      masalah: 'Konsumen frustrasi karena harus terus menaikkan tier berbayar (dari 15GB ke 100GB, 2TB, dst) hanya karena storage penuh.',
+      temuan: 'Pew Research (2023) melaporkan 67% pengguna mengalami "subscription fatigue" biaya storage. Forrester mencatat ROI software dedupe < 6 bln.',
+      solusi: 'Model bisnis SaaS Freemium ($4.99/bulan atau $39.99/tahun), jauh lebih murah dibanding upgrade tier Google/iCloud 2TB ($119.88/thn).',
+      rekomendasi: 'Sediakan kalkulator penghematan biaya interaktif (Cost-Savings Calculator) di landing page untuk konversi free-to-paid.'
+    },
+    {
+      no: 4,
+      dimensi: '4. Fragmentasi Multi-Perangkat & Multi-Cloud',
+      masalah: 'Pengguna memiliki akun terpisah di Google Drive, OneDrive, iCloud, dan Dropbox dengan file duplikat yang tercecer antar vendor.',
+      temuan: 'Zhang et al. (2020) & Backblaze (2022) menemukan multi-device auto-sync memicu 3.4 salinan per file media tanpa koordinasi antar cloud.',
+      solusi: 'Cross-Cloud Unified Dashboard: Mengaudit file ganda lintas penyedia cloud dalam satu akun terpadu yang aman.',
+      rekomendasi: 'Bangun integrasi resmi via REST API OAuth2 untuk Google Drive, Microsoft OneDrive, dan Dropbox pada versi MVP.'
+    },
+    {
+      no: 5,
+      dimensi: '5. Duplikasi Dokumen Revisi & Media Visual',
+      masalah: 'File revisi kerja (v1, final, fix) dan foto yang terkompresi/crop di media sosial tidak terdeteksi oleh pencarian nama file standar.',
+      temuan: 'Microsoft Research (2019) mencatat 75% kesamaan konten dokumen kantor. Puzik et al. (2019) mencatat 98% foto mirip bisa dideteksi pHash.',
+      solusi: 'Implementasi Content-Defined Chunking (FastCDC) untuk dokumen kerja dan Perceptual Hashing (pHash) untuk media foto/video.',
+      rekomendasi: 'Tawarkan fitur "Smart Grouping" yang mengelompokkan foto mirip (burst-shot) dan merekomendasikan satu foto terbaik.'
+    },
+    {
+      no: 6,
+      dimensi: '6. Keamanan, Privasi & Kepatuhan Data',
+      masalah: 'Pengguna dan perusahaan khawatir software pihak ketiga membaca isi dokumen rahasia mereka saat melakukan pembersihan.',
+      temuan: 'Bellare et al. (2013) & Li et al. (2014) merumuskan Message-Locked Encryption (MLE) & Convergent Key untuk Zero-Knowledge dedupe.',
+      solusi: 'Arsitektur Client-Side Zero-Knowledge: software hanya membandingkan hash signature lokal, server TIDAK PERNAH membaca isi file.',
+      rekomendasi: 'Sertifikasi kepatuhan privasi (GDPR & ISO/IEC 27001 readiness) sebagai instrumen penjualan utama untuk segmen korporat (B2B).'
+    }
+  ];
+
+  let rIdx = 6;
+  kesimpulanMatrix.forEach((item, idx) => {
+    const row = wsKesimpulan.getRow(rIdx);
+    row.values = ['', item.no, item.dimensi, item.masalah, item.temuan, item.solusi, item.rekomendasi];
+    row.alignment = { vertical: 'top', wrapText: true };
+    for (let c = 2; c <= 7; c++) {
+      row.getCell(c).border = thinBorder;
+      if (idx % 2 === 1) row.getCell(c).fill = fillZebra;
+      if (c === 2) row.getCell(c).alignment = { vertical: 'top', horizontal: 'center' };
+      if (c === 3) row.getCell(c).font = { name: 'Segoe UI', size: 10, bold: true, color: { argb: 'FF1F4E79' } };
+    }
+    rIdx++;
+  });
+
+  // Table 2: Ringkasan Metrik Angka Kunci Riset (Summary Metrics)
+  rIdx += 2;
+  wsKesimpulan.mergeCells(`B${rIdx}:G${rIdx}`);
+  wsKesimpulan.getCell(`B${rIdx}`).value = 'RINGKASAN METRIK KUANTITATIF UTAMA (BENCHMARK 30 SUMBER)';
+  wsKesimpulan.getCell(`B${rIdx}`).font = fontSection;
+  rIdx++;
+
+  wsKesimpulan.getRow(rIdx).values = ['', 'Indikator / Metrik', 'Angka / Tolok Ukur Riset', 'Sumber Validasi', 'Dampak Langsung ke Bisnis DedupliCloud', '', ''];
+  wsKesimpulan.mergeCells(`E${rIdx}:G${rIdx}`);
+  for (let c = 2; c <= 7; c++) {
+    const cell = wsKesimpulan.getRow(rIdx).getCell(c);
+    cell.font = fontHeader;
+    cell.fill = fillSubHeader;
+    cell.alignment = { vertical: 'middle', horizontal: 'center' };
+  }
+  rIdx++;
+
+  const metricsData = [
+    ['Rata-rata Ruang Cloud Terbuang (Data Redundan)', '42.0% dari total kuota', 'IDC Global DataSphere 2022', 'Pasar sangat luas; 4 dari 10 GB kapasitas berbayar terisi file sampah.'],
+    ['Pengeluaran Cloud Sia-Sia (Cloud Waste)', '32.0% dari anggaran', 'Flexera State of the Cloud 2023', 'Justifikasi kuat bagi pengguna untuk membeli tool penghemat storage.'],
+    ['Potensi Penghematan Bandwidth Internet', '65.0% - 70.0%', 'Xia et al. (IEEE TPDS) & Chen (2021)', 'Waktu tunggu upload terpangkas drastis, sangat diminati di koneksi terbatas.'],
+    ['Efisiensi Waktu Produktivitas Kerja', '4.2 Jam / Karyawan / Bulan', 'Forrester Research TEI 2022', 'Nilai jual B2B: menghemat ratusan jam kerja tim untuk mencari file asli.'],
+    ['Tingkat Akurasi Deteksi Media Serupa', '98.2% akurasi (pHash)', 'Puzik et al. (ACM Multimedia 2019)', 'Fitur unggulan unik yang tidak dimiliki oleh fitur bawaan Google/OneDrive.'],
+    ['Penghematan Biaya Pengguna vs Upgrade Tier', '67% - 89% lebih hemat', 'Analisis Komparasi FinOps 2023', 'Pengguna cukup bayar $39.99/thn daripada upgrade 2TB seharga $119.88/thn.']
+  ];
+
+  metricsData.forEach((m, idx) => {
+    const row = wsKesimpulan.getRow(rIdx);
+    row.values = ['', m[0], m[1], m[2], m[3], '', ''];
+    wsKesimpulan.mergeCells(`E${rIdx}:G${rIdx}`);
+    row.alignment = { vertical: 'top', wrapText: true };
+    for (let c = 2; c <= 7; c++) {
+      row.getCell(c).border = thinBorder;
+      if (idx % 2 === 1) row.getCell(c).fill = fillZebra;
+      if (c === 2) row.getCell(c).font = { bold: true };
+      if (c === 3) {
+        row.getCell(c).alignment = { vertical: 'top', horizontal: 'center' };
+        row.getCell(c).font = { bold: true, color: { argb: 'FF006100' } };
+      }
+    }
+    rIdx++;
+  });
+
+  // ==========================================
+  // SHEET 2: RINGKASAN EKSEKUTIF & IDE BISNIS
   // ==========================================
   const ws1 = workbook.addWorksheet('Ringkasan Ide Bisnis', {
     views: [{ showGridLines: true }],
-    properties: { tabColor: { argb: 'FF1F4E79' } }
+    properties: { tabColor: { argb: 'FF2F6B9A' } }
   });
 
   ws1.columns = [
@@ -37,7 +185,6 @@ async function createResearchWorkbook() {
     { width: 55 }
   ];
 
-  // Title
   ws1.mergeCells('B2:D2');
   ws1.getCell('B2').value = 'PROPOSAL RISET & IDE BISNIS: SMART DEDUPLICLOUD';
   ws1.getCell('B2').font = fontTitle;
@@ -47,7 +194,6 @@ async function createResearchWorkbook() {
   ws1.getCell('B3').font = fontSubtitle;
 
   let rowIdx = 5;
-
   const executiveSections = [
     {
       kategori: '1. Pernyataan Masalah (Problem Statement)',
@@ -101,7 +247,6 @@ async function createResearchWorkbook() {
     }
   ];
 
-  // Header Table
   ws1.getRow(rowIdx).values = ['', 'Kategori Analisis', 'Komponen / Aspek', 'Uraian & Strategi'];
   for (let c = 2; c <= 4; c++) {
     const cell = ws1.getRow(rowIdx).getCell(c);
@@ -123,11 +268,11 @@ async function createResearchWorkbook() {
   });
 
   // ==========================================
-  // SHEET 2: 30 SUMBER RISET
+  // SHEET 3: 30 SUMBER RISET
   // ==========================================
   const ws2 = workbook.addWorksheet('30 Sumber Riset', {
     views: [{ showGridLines: true }],
-    properties: { tabColor: { argb: 'FF2F6B9A' } }
+    properties: { tabColor: { argb: 'FF418AB3' } }
   });
 
   ws2.columns = [
@@ -528,7 +673,7 @@ async function createResearchWorkbook() {
   });
 
   // ==========================================
-  // SHEET 3: VALIDASI MASALAH & ANALISIS PASAR
+  // SHEET 4: VALIDASI MASALAH & ANALISIS PASAR
   // ==========================================
   const ws3 = workbook.addWorksheet('Validasi Pasar & Statistik', {
     views: [{ showGridLines: true }],
@@ -551,7 +696,6 @@ async function createResearchWorkbook() {
   ws3.getCell('B3').value = 'Data estimasi pemborosan kapasitas cloud dan analisis perbandingan biaya';
   ws3.getCell('B3').font = fontSubtitle;
 
-  // Table 1: Komposisi File Duplikat di Cloud Pengguna
   ws3.mergeCells('B5:E5');
   ws3.getCell('B5').value = '1. Komposisi File Duplikat di Cloud Storage Konsumen & Tim (Berdasarkan Agregasi Riset)';
   ws3.getCell('B5').font = fontSection;
@@ -582,7 +726,6 @@ async function createResearchWorkbook() {
     }
   });
 
-  // Table 2: Perbandingan Biaya (Cost Benefit Analysis)
   const costStartRow = 13;
   ws3.mergeCells(`B${costStartRow}:E${costStartRow}`);
   ws3.getCell(`B${costStartRow}`).value = '2. Perbandingan Biaya: Terus Upgrade Storage vs Menggunakan DedupliCloud';
@@ -617,7 +760,7 @@ async function createResearchWorkbook() {
   });
 
   // ==========================================
-  // SHEET 4: ROADMAP PENGEMBANGAN & MVP
+  // SHEET 5: ROADMAP PENGEMBANGAN & MVP
   // ==========================================
   const ws4 = workbook.addWorksheet('Roadmap Produk & MVP', {
     views: [{ showGridLines: true }],
@@ -698,7 +841,6 @@ async function createResearchWorkbook() {
     }
   });
 
-  // Save Workbook
   const filePath = path.join(__dirname, 'Riset_Ide_Bisnis_Deduplikasi_Cloud_Storage.xlsx');
   await workbook.xlsx.writeFile(filePath);
   console.log('Workbook successfully generated at: ' + filePath);
