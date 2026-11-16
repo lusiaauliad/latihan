@@ -1,9 +1,14 @@
-# Latihan
+# Repositori Latihan
 
-Repositori ini memuat riset analisis permasalahan dan ide bisnis teknologi.
+Selamat datang di repositori **latihan**.
 
-## 📂 Dokumen Riset
-Seluruh berkas riset, database 30 sumber, dan buku kerja Excel tersimpan di dalam folder:
-👉 [**`riset-ide-bisnis/`**](riset-ide-bisnis/)
+Repositori ini difungsikan sebagai ruang kerja untuk:
+* Eksplorasi pemrograman, latihan koding, dan pengujian fitur.
+* Praktik penggunaan Git & GitHub.
+* Eksperimen proyek-proyek teknis mendatang.
 
-Silakan klik folder di atas untuk melihat dokumen riset lengkap beserta berkas Excel dan dokumentasi langkah-langkahnya.
+---
+
+### 🔗 Repositori Riset Khusus:
+Seluruh dokumen dan file riset ide bisnis (*Smart DedupliCloud*, file Excel 5 sheet, dan analisis 30 sumber) telah dipisahkan ke repositori khusus:
+👉 **[lusiaauliad/riset-ide-bisnis](https://github.com/lusiaauliad/riset-ide-bisnis)**
