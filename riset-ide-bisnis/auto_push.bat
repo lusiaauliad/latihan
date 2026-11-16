@@ -3,7 +3,7 @@ echo ========================================================
 echo   OTOMASI GIT PUSH: REPOSITORI LATIHAN (GITHUB)
 echo ========================================================
 set "PATH=%PATH%;C:\Program Files\Git\cmd;C:\Program Files\Git\bin"
-cd /d "%~dp0"
+cd /d "%~dp0.."
 
 echo [1/3] Menambahkan berkas perubahan (git add)...
 git add .
